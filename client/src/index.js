@@ -35,6 +35,38 @@ class App extends React.Component {
       }); // end API call    
   }
 
+  fetchZip(){
+     axios.get('https://ipapi.co/json/')
+          .then((response) => {
+            this.setState({
+              zip: response.data.postal
+            });
+          }).then((response) => {
+            this.fetchRestaurants();
+          })
+          .catch((error) => {
+            console.log(error);
+          }); // end API call
+    }
+
+  fetchRestaurants() {
+     axios.get('https://data.cityofnewyork.us/resource/43nn-pn8j.json', {
+            params: {
+                "$limit" : 10,
+                "$$app_token" : "rwWEn2Tw493ASSX8bzGjwuz8O",
+                "zipcode": this.state.zip  // should be this.state.zip
+            }
+          })
+          .then((response) => {
+            this.setState({
+              data: response.data
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          }); // end API call
+  }
+
   getNameAndGrade(name, grade){
     return(
       <Grade name={name} grade={grade} />
