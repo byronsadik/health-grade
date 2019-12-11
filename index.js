@@ -1,12 +1,9 @@
 const express = require('express');
 const app = express();
-const port = 4000;
-
+const port = 3001;
 const axios = require('axios');
-
 const util = require('util');
 const fetch = require("node-fetch");
-
 const cors = require('cors');
 
 app.use(cors());
